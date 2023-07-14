@@ -26,8 +26,8 @@ public class DeletedMember {
 
     private String email;
 
-    private Date birthday;
+    private LocalDateTime birthday;
 
-    private LocalDateTime deleteDate;
+    private LocalDateTime createDate;
 
 }
