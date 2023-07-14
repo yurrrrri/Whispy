@@ -22,6 +22,6 @@ public class Comment extends BaseEntity {
 
     private String content;
 
-    private List<String> subCooments;
+    private List<String> subComments;
 
 }

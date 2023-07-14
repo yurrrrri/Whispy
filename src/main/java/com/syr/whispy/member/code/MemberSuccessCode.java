@@ -12,4 +12,5 @@ public enum MemberSuccessCode implements Code {
 
     private String code;
     private String msg;
+
 }

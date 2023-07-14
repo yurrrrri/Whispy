@@ -27,4 +27,5 @@ public class InitializeMongoDb implements CommandLineRunner {
             mongoTemplate.createCollection(collection);
         }
     }
+
 }
