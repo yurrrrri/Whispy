@@ -11,6 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 public class PostUpdateDto {
 
+    private String post;
+
     private String content;
 
     private List<String> tags;
