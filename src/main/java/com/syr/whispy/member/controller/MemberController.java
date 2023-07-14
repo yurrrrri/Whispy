@@ -14,7 +14,7 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/login")
-    public String showLogin() {
+    public String login() {
         return "usr/login";
     }
 

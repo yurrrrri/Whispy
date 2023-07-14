@@ -9,9 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SubCommentCreateDto {
 
-    private String comment;
-
     private String writer;
+
+    private String comment;
 
     private String content;
 
