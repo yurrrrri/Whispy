@@ -1,0 +1,38 @@
+spring:
+  data:
+    mongodb:
+      database: ENC(VKatb/a8xoKUMvJk2+kBnw==)
+      uri: ENC(zz333w0mZwUFf6OWbkJDxBcz/usNBeBQzOUdAslksykD4TMSaK/WpA4DaGpjh41ZvuhVwS/e2GquDH5mw165oWuMGjERTJjqdMY451DptnXHbK3XgBwuX5XMjzT75NmyD+uN2fgUtos=)
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            scope:
+            clientId: ENC(uVBfR93DutT/Zo5mpb9I+4gAPghPutGJNPSOoWwW5H482xENEGk9/HD+ze7fjCSG)
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: '${base.url}/login/oauth2/code/kakao'
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+base:
+  url: 'http://localhost:8080'
