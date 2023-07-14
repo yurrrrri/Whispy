@@ -1,12 +1,11 @@
 package com.syr.whispy.member.service;
 
+import com.syr.whispy.base.exception.DataNotFoundException;
+import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.entity.Follow;
 import com.syr.whispy.member.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -31,11 +30,11 @@ public class FollowService {
     public Follow create(String fromMemberId, String toMemberId) {
         if (memberService.findById(fromMemberId).isEmpty() ||
                 memberService.findById(toMemberId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MEMBER_NOT_EXISTS.getMsg());
+            throw new DataNotFoundException(MEMBER_NOT_EXISTS.getMsg());
         }
 
         if (findByFromMemberIdAndFollowedMemberId(fromMemberId, toMemberId).isPresent()) {
-            throw new DuplicateKeyException(ALREADY_FOLLOWED.getMsg());
+            throw new DuplicateFieldException(ALREADY_FOLLOWED.getMsg());
         }
 
         return followRepository.insert(Follow.builder()

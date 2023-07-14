@@ -1,12 +1,11 @@
 package com.syr.whispy.member.service;
 
+import com.syr.whispy.base.exception.DataNotFoundException;
+import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.entity.Block;
 import com.syr.whispy.member.repository.BlockRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -31,11 +30,11 @@ public class BlockService {
     public Block create(String fromMemberId, String toMemberId) {
         if (memberService.findById(fromMemberId).isEmpty() ||
                 memberService.findById(toMemberId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MEMBER_NOT_EXISTS.getMsg());
+            throw new DataNotFoundException(MEMBER_NOT_EXISTS.getMsg());
         }
 
         if (findByFromMemberIdAndBlockedMemberId(fromMemberId, toMemberId).isPresent()) {
-            throw new DuplicateKeyException(ALREADY_BLOCKED.getMsg());
+            throw new DuplicateFieldException(ALREADY_BLOCKED.getMsg());
         }
 
         return blockRepository.insert(Block.builder()

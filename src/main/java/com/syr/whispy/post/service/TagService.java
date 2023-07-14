@@ -1,13 +1,12 @@
 package com.syr.whispy.post.service;
 
+import com.syr.whispy.base.exception.DataNotFoundException;
+import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.post.entity.Tag;
 import com.syr.whispy.post.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,15 +48,13 @@ public class TagService {
 
     private void verifyNotExistsTagByName(String name) {
         if (tagRepository.findByName(name).isPresent()) {
-            throw new DuplicateKeyException(TAG_ALREADY_EXISTS.getMsg());
+            throw new DuplicateFieldException(TAG_ALREADY_EXISTS.getMsg());
         }
     }
 
     private void verifyExistsTagById(String id) {
         if (tagRepository.findById(id).isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, TAG_NOT_EXISTS.getMsg()
-            );
+            throw new DataNotFoundException(TAG_NOT_EXISTS.getMsg());
         }
     }
 

@@ -1,9 +1,9 @@
 package com.syr.whispy.member.service;
 
+import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class MemberService {
 
     public Member join(String username, String password) {
         if (findByUsername(username).isPresent()) {
-            throw new DuplicateKeyException(USERNAME_ALREADY_EXISTS.getMsg());
+            throw new DuplicateFieldException(USERNAME_ALREADY_EXISTS.getMsg());
         }
 
         password = passwordEncoder.encode(password);
