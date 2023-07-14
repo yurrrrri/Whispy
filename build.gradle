@@ -45,9 +45,6 @@ dependencies {
     implementation 'org.webjars:sockjs-client:1.5.1'
     implementation 'org.webjars:stomp-websocket:2.3.4'
 
-    // Jasypt
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
-
 }
 
 tasks.named('test') {
