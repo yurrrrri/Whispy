@@ -6,11 +6,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MemberErrorCode implements Code {
+public enum MemberSuccessCode implements Code {
 
-    USERNAME_ALREADY_EXISTS("F_M1", "이미 존재하는 회원 아이디입니다.");
+    MEMBER_CREATED("S_M1", "회원 가입이 완료되었습니다.");
 
     private String code;
     private String msg;
-
 }
