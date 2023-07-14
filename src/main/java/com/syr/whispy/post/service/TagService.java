@@ -48,13 +48,13 @@ public class TagService {
 
     private void verifyNotExistsTagByName(String name) {
         if (tagRepository.findByName(name).isPresent()) {
-            throw new DuplicateFieldException(TAG_ALREADY_EXISTS.getMsg());
+            throw new DuplicateFieldException(TAG_ALREADY_EXISTS);
         }
     }
 
     private void verifyExistsTagById(String id) {
         if (tagRepository.findById(id).isEmpty()) {
-            throw new DataNotFoundException(TAG_NOT_EXISTS.getMsg());
+            throw new DataNotFoundException(TAG_NOT_EXISTS);
         }
     }
 

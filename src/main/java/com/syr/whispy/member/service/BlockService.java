@@ -30,11 +30,11 @@ public class BlockService {
     public Block create(String fromMemberId, String toMemberId) {
         if (memberService.findById(fromMemberId).isEmpty() ||
                 memberService.findById(toMemberId).isEmpty()) {
-            throw new DataNotFoundException(MEMBER_NOT_EXISTS.getMsg());
+            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
         }
 
         if (findByFromMemberIdAndBlockedMemberId(fromMemberId, toMemberId).isPresent()) {
-            throw new DuplicateFieldException(ALREADY_BLOCKED.getMsg());
+            throw new DuplicateFieldException(ALREADY_BLOCKED);
         }
 
         return blockRepository.insert(Block.builder()
