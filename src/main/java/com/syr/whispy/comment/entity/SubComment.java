@@ -14,9 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "sub_comment")
 public class SubComment extends BaseEntity {
 
-    private String comment;
-
     private String writer;
+
+    private String comment;
 
     private String content;
 
