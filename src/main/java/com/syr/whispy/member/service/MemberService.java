@@ -28,7 +28,7 @@ public class MemberService {
 
     public Member join(String username, String password) {
         if (findByUsername(username).isPresent()) {
-            throw new DuplicateFieldException(USERNAME_ALREADY_EXISTS.getMsg());
+            throw new DuplicateFieldException(USERNAME_ALREADY_EXISTS);
         }
 
         password = passwordEncoder.encode(password);

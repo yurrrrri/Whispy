@@ -30,11 +30,11 @@ public class FollowService {
     public Follow create(String fromMemberId, String toMemberId) {
         if (memberService.findById(fromMemberId).isEmpty() ||
                 memberService.findById(toMemberId).isEmpty()) {
-            throw new DataNotFoundException(MEMBER_NOT_EXISTS.getMsg());
+            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
         }
 
         if (findByFromMemberIdAndFollowedMemberId(fromMemberId, toMemberId).isPresent()) {
-            throw new DuplicateFieldException(ALREADY_FOLLOWED.getMsg());
+            throw new DuplicateFieldException(ALREADY_FOLLOWED);
         }
 
         return followRepository.insert(Follow.builder()
