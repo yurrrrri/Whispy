@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Member extends BaseEntity {
 
     private String email;
 
-    private Date birthday;
+    private LocalDateTime birthday;
 
     private String image;
 
