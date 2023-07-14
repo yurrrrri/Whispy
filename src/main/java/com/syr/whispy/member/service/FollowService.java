@@ -15,8 +15,8 @@ import java.util.UUID;
 import static com.syr.whispy.member.code.MemberErrorCode.ALREADY_FOLLOWED;
 import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class FollowService {
 
     private final FollowRepository followRepository;
