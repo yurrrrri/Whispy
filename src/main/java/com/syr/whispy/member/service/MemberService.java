@@ -11,8 +11,8 @@ import java.util.Optional;
 
 import static com.syr.whispy.member.code.MemberErrorCode.USERNAME_ALREADY_EXISTS;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
