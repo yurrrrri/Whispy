@@ -17,8 +17,8 @@ import static com.syr.whispy.post.code.TagErrorCode.TAG_ALREADY_EXISTS;
 import static com.syr.whispy.post.code.TagErrorCode.TAG_NOT_EXISTS;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
-@Service
 @RequiredArgsConstructor
+@Service
 public class TagService {
 
     private final TagRepository tagRepository;
@@ -32,7 +32,7 @@ public class TagService {
     }
 
     public Tag create(String name) {
-        verifyExistsTagByName(name);
+        verifyNotExistsTagByName(name);
 
         return tagRepository.insert(Tag.builder()
                 .id(UUID.randomUUID().toString())
@@ -42,18 +42,18 @@ public class TagService {
     }
 
     public void delete(String tagId) {
-        verifyNotExistsTagById(tagId);
+        verifyExistsTagById(tagId);
 
         tagRepository.deleteById(tagId);
     }
 
-    private void verifyExistsTagByName(String name) {
+    private void verifyNotExistsTagByName(String name) {
         if (tagRepository.findByName(name).isPresent()) {
             throw new DuplicateKeyException(TAG_ALREADY_EXISTS.getMsg());
         }
     }
 
-    private void verifyNotExistsTagById(String id) {
+    private void verifyExistsTagById(String id) {
         if (tagRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, TAG_NOT_EXISTS.getMsg()
