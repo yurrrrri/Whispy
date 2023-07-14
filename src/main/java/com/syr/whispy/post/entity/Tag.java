@@ -1,10 +1,10 @@
 package com.syr.whispy.post.entity;
 
-import com.syr.whispy.base.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
@@ -12,7 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Document(collection = "tag")
-public class Tag extends BaseEntity {
+public class Tag {
+
+    @Id
+    private String id;
 
     private String name;
 
