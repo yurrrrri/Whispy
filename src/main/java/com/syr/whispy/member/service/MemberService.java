@@ -18,7 +18,6 @@ import static com.syr.whispy.member.code.MemberErrorCode.USERNAME_ALREADY_EXISTS
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public Optional<Member> findById(String id) {
         return memberRepository.findById(id);
@@ -38,16 +37,13 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
-    public Member join(String username, String password) {
+    public Member join(String username) {
         if (findByUsername(username).isPresent()) {
             throw new DuplicateFieldException(USERNAME_ALREADY_EXISTS);
         }
 
-        password = passwordEncoder.encode(password);
-
         Member member = Member.builder()
                 .username(username)
-                .password(password)
                 .build();
         memberRepository.save(member);
 
