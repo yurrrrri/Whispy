@@ -34,7 +34,7 @@ public class Member extends BaseEntity {
 
     private String image;
 
-    private List<String> starredPost;
+    private List<String> starredPosts;
 
     private Set<Role> authorities = new HashSet<>();
 

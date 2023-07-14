@@ -24,6 +24,4 @@ public class Post extends BaseEntity {
 
     private List<String> likeMembers;
 
-    private List<String> comments;
-
 }
