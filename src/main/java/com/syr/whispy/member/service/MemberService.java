@@ -1,5 +1,6 @@
 package com.syr.whispy.member.service;
 
+import com.syr.whispy.base.exception.DataNotFoundException;
 import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.MemberRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 import static com.syr.whispy.member.code.MemberErrorCode.USERNAME_ALREADY_EXISTS;
 
 @RequiredArgsConstructor
@@ -20,6 +22,16 @@ public class MemberService {
 
     public Optional<Member> findById(String id) {
         return memberRepository.findById(id);
+    }
+
+    public Member findByIdAndGet(String id) {
+        Optional<Member> opMember = findById(id);
+
+        if (opMember.isEmpty()) {
+            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
+        }
+
+        return opMember.get();
     }
 
     public Optional<Member> findByUsername(String username) {
