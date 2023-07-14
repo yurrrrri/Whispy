@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_ALREADY_EXISTS;
+import static com.syr.whispy.member.code.MemberErrorCode.USERNAME_ALREADY_EXISTS;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class MemberService {
 
     public Member join(String username, String password) {
         if (findByUsername(username).isPresent()) {
-            throw new DuplicateKeyException(MEMBER_ALREADY_EXISTS.getMsg());
+            throw new DuplicateKeyException(USERNAME_ALREADY_EXISTS.getMsg());
         }
 
         password = passwordEncoder.encode(password);

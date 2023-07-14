@@ -1,4 +1,4 @@
-package com.syr.whispy.base.entity;
+package com.syr.whispy.member.entity;
 
 public enum Role {
     ADMIN, USER
