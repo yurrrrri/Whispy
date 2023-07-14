@@ -1,7 +1,6 @@
 package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
-import com.syr.whispy.base.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +32,8 @@ public class Member extends BaseEntity {
     private Date birthday;
 
     private String image;
+
+    private List<String> starredPost;
 
     private Set<Role> authorities = new HashSet<>();
 
