@@ -31,13 +31,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String oauthId = oAuth2User.getName();
         String username = providerTypeCode + "_%s".formatted(oauthId);
-        Member member = memberService.join(username, "");
+        Member member = memberService.join(username);
 
-        return new CustomOAuth2User(
-                member.getUsername(),
-                member.getPassword(),
-                member.getAuthorities()
-        );
+        return new CustomOAuth2User(member.getUsername(), "", member.getAuthorities());
     }
 
 }
