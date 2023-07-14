@@ -45,8 +45,8 @@ public class PostService {
         );
     }
 
-    public Post update(String postId, PostUpdateDto dto) {
-        Post post = findByIdAndGet(postId);
+    public Post update(PostUpdateDto dto) {
+        Post post = findByIdAndGet(dto.getPost());
 
         return postRepository.save(post.toBuilder()
                 .content(dto.getContent())
