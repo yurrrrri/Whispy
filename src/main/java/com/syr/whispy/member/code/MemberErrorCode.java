@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MemberErrorCode implements Code {
 
-    MEMBER_ALREADY_EXISTS("F_M_1", "이미 존재하는 회원입니다.");
+    MEMBER_ALREADY_EXISTS("F_M_1", "이미 존재하는 회원 아이디입니다.");
 
     private String code;
     private String msg;
