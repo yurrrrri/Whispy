@@ -19,4 +19,5 @@ public class SubComment extends BaseEntity {
     private String writer;
 
     private String content;
+
 }

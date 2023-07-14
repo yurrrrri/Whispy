@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/usr")
 @RequiredArgsConstructor
+@RequestMapping("/usr")
 public class MemberController {
 
     private MemberService memberService;
