@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SpamWordErrorCode implements Code {
 
-    SPAM_WORD_ALREADY_EXISTS("F_P2", "이미 존재하는 금지어입니다.");
+    SPAM_WORD_ALREADY_EXISTS("F_SW1", "이미 존재하는 금지어입니다.");
 
     private String code;
     private String msg;
