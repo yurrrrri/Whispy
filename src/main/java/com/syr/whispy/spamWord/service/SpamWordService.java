@@ -1,7 +1,7 @@
 package com.syr.whispy.spamWord.service;
 
 import com.syr.whispy.base.exception.DuplicateFieldException;
-import com.syr.whispy.spamWord.SpamWordCreateDto;
+import com.syr.whispy.spamWord.dto.SpamWordCreateDto;
 import com.syr.whispy.spamWord.entity.SpamWord;
 import com.syr.whispy.spamWord.repository.SpamWordRepository;
 import lombok.RequiredArgsConstructor;
