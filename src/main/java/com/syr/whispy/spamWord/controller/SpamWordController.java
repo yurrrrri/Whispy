@@ -1,6 +1,6 @@
 package com.syr.whispy.spamWord.controller;
 
-import com.syr.whispy.spamWord.SpamWordCreateDto;
+import com.syr.whispy.spamWord.dto.SpamWordCreateDto;
 import com.syr.whispy.spamWord.service.SpamWordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

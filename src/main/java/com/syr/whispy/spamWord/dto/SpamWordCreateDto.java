@@ -1,4 +1,4 @@
-package com.syr.whispy.spamWord;
+package com.syr.whispy.spamWord.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
