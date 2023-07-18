@@ -18,6 +18,4 @@ public class Chat extends BaseEntity {
 
     private List<String> members;
 
-    private List<String> messages;
-
 }
