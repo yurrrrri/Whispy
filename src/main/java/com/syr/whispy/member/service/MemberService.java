@@ -5,10 +5,11 @@ import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 import static com.syr.whispy.member.code.MemberErrorCode.USERNAME_ALREADY_EXISTS;
@@ -24,13 +25,20 @@ public class MemberService {
     }
 
     public Member findByIdAndGet(String id) {
-        Optional<Member> opMember = findById(id);
+        return findById(id)
+                .orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
+    }
 
-        if (opMember.isEmpty()) {
+    public void verify(String memberId) {
+        if (findById(memberId).isEmpty()) {
             throw new DataNotFoundException(MEMBER_NOT_EXISTS);
         }
+    }
 
-        return opMember.get();
+    public void verify(String member1Id, String member2Id) {
+        if (findById(member1Id).isEmpty() || findById(member2Id).isEmpty()) {
+            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
+        }
     }
 
     public Optional<Member> findByUsername(String username) {
@@ -42,12 +50,11 @@ public class MemberService {
             throw new DuplicateFieldException(USERNAME_ALREADY_EXISTS);
         }
 
-        Member member = Member.builder()
+        return memberRepository.insert(Member.builder()
+                .id(UUID.randomUUID().toString())
+                .createDate(LocalDateTime.now())
                 .username(username)
-                .build();
-        memberRepository.save(member);
-
-        return member;
+                .build());
     }
 
 }
