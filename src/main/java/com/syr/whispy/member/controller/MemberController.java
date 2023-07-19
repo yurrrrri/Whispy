@@ -34,7 +34,7 @@ public class MemberController {
     public String showMyPage(Model model, Principal principal) {
         Member member = memberService.findByIdAndGet(principal.getName());
 
-        List<Post> posts = postService.findByWriter(principal.getName());
+        List<Post> posts = postService.findByWriter(member.getUsername());
 
         List<String> tagIdList = new ArrayList<>();
         posts.forEach(p -> tagIdList.addAll(p.getTags()));
@@ -45,7 +45,6 @@ public class MemberController {
         model.addAttribute("member", member);
         model.addAttribute("posts", posts);
         model.addAttribute("tags", tags);
-
         return "usr/me";
     }
 
