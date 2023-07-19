@@ -67,6 +67,7 @@ public class MemberService {
                 .email(dto.getEmail())
                 .birthday(dto.getBirthday())
                 .image(dto.getImage())
+                .description(dto.getDescription())
                 .build()
         );
     }
