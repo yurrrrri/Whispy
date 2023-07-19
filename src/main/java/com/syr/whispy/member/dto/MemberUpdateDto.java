@@ -1,5 +1,6 @@
 package com.syr.whispy.member.dto;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,7 @@ public class MemberUpdateDto {
 
     private String image;
 
-    @Size(min = 2, max = 50)
+    @Max(50)
     private String description;
 
 }
