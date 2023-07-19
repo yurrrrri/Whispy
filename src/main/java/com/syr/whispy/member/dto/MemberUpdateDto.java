@@ -1,5 +1,6 @@
 package com.syr.whispy.member.dto;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,5 +22,8 @@ public class MemberUpdateDto {
     private LocalDateTime birthday;
 
     private String image;
+
+    @Size(min = 2, max = 50)
+    private String description;
 
 }

@@ -1,6 +1,7 @@
 package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,9 @@ public class Member extends BaseEntity {
     private LocalDateTime birthday;
 
     private String image;
+
+    @Size(min = 2, max = 50)
+    private String description; // 소개글
 
     private List<String> starredPosts;
 
