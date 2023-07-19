@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,6 +33,10 @@ public class PostService {
         }
 
         return opPost.get();
+    }
+
+    public List<Post> findByWriter(String username) {
+        return postRepository.findByWriter(username);
     }
 
     public Post create(PostCreateDto dto) {
