@@ -2,6 +2,7 @@ package com.syr.whispy.member.service;
 
 import com.syr.whispy.base.exception.DataNotFoundException;
 import com.syr.whispy.base.exception.DuplicateFieldException;
+import com.syr.whispy.member.dto.MemberUpdateDto;
 import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,28 @@ public class MemberService {
                 .createDate(LocalDateTime.now())
                 .username(username)
                 .build());
+    }
+
+    public Member update(MemberUpdateDto dto) {
+        Member member = findByIdAndGet(dto.getMemberId());
+
+        return memberRepository.save(member.toBuilder()
+                .modifyDate(LocalDateTime.now())
+                .nickname(dto.getNickname())
+                .email(dto.getEmail())
+                .birthday(dto.getBirthday())
+                .image(dto.getImage())
+                .build()
+        );
+    }
+
+    public Member softDelete(String memberId) {
+        Member member = findByIdAndGet(memberId);
+
+        return memberRepository.save(member.toBuilder()
+                .deleteDate(LocalDateTime.now())
+                .build()
+        );
     }
 
 }
