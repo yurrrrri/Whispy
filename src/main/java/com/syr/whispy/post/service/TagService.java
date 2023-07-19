@@ -26,6 +26,11 @@ public class TagService {
         return tagRepository.findById(id);
     }
 
+    public Tag findByIdAndGet(String id) {
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException(TAG_NOT_EXISTS));
+    }
+
     public List<Tag> findAll() {
         return tagRepository.findAll();
     }
