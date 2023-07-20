@@ -4,3 +4,11 @@
     font-weight: 700;
     font-style: normal;
 }
+
+html > body {
+    background-color: snow;
+    width: 1200px;
+    max-width: 1200px;
+    font-family: 'BookkMyungjo-Bd';
+    font-size: 16px;
+}
