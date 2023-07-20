@@ -1,14 +1,13 @@
 @font-face {
-    font-family: 'BookkMyungjo-Bd';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
-    font-weight: 700;
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
     font-style: normal;
 }
 
 html > body {
-    background-color: snow;
     width: 1200px;
     max-width: 1200px;
-    font-family: 'BookkMyungjo-Bd';
-    font-size: 16px;
+    font-family: 'SUIT-Regular';
+    font-size: 18px;
 }
