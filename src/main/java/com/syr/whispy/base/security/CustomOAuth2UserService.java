@@ -24,13 +24,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             OAuth2UserRequest userRequest
     ) throws OAuth2AuthenticationException {
 
-        String providerTypeCode = userRequest
-                .getClientRegistration().getRegistrationId().toUpperCase();
-
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String oauthId = oAuth2User.getName();
-        String username = providerTypeCode + "_%s".formatted(oauthId);
+        String username = oAuth2User.getName();
         Member member = memberService.join(username);
 
         return new CustomOAuth2User(member.getUsername(), "", member.getAuthorities());
