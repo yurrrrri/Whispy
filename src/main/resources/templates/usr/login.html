@@ -1,14 +1,30 @@
-<!doctype html>
-<html lang="en">
+<html layout:decorate="~{common/layout.html}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/common.css">
-    <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/common.css">
+  <title>로그인 | Whispy</title>
 </head>
 <body>
-This is a Login page.
+<main layout:fragment="main">
+  <div class="w-96 rounded-lg">
+    <div class="text-center mt-2">
+      <a href="/oauth2/authorization/naver"
+         class="btn btn-outline w-full gap-2 bg-white">
+        <i class="fa-solid fa-n text-[color:#2DB400]"></i>
+        <span>네이버 로그인</span>
+      </a>
+    </div>
+    <div class="text-center mt-2">
+      <a href="/oauth2/authorization/kakao"
+         class="btn btn-outline w-full gap-2 bg-white">
+        <i class="fa-solid fa-comment text-[color:#ffe812]"></i>
+        <span>카카오 로그인</span>
+      </a>
+    </div>
+  </div>
+</main>
 </body>
 </html>
