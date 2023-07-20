@@ -30,6 +30,15 @@ public class MemberService {
                 .orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
     }
 
+    public Optional<Member> findByUsername(String username) {
+        return memberRepository.findByUsername(username);
+    }
+
+    public Member findByUsernameAndGet(String username) {
+        return findByUsername(username)
+                .orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
+    }
+
     public void verify(String memberId) {
         if (findById(memberId).isEmpty()) {
             throw new DataNotFoundException(MEMBER_NOT_EXISTS);
@@ -40,10 +49,6 @@ public class MemberService {
         if (findById(member1Id).isEmpty() || findById(member2Id).isEmpty()) {
             throw new DataNotFoundException(MEMBER_NOT_EXISTS);
         }
-    }
-
-    public Optional<Member> findByUsername(String username) {
-        return memberRepository.findByUsername(username);
     }
 
     public Member join(String username) {

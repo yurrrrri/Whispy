@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,6 +26,10 @@ public class FollowService {
             String fromMemberId, String toMemberId
     ) {
         return followRepository.findByMemberAndFollowedMember(fromMemberId, toMemberId);
+    }
+
+    public List<Follow> findByFromMemberId(String memberId) {
+        return followRepository.findByMember(memberId);
     }
 
     public Follow create(String fromMemberId, String toMemberId) {
