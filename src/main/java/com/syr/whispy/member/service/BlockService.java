@@ -24,7 +24,7 @@ public class BlockService {
     public Optional<Block> findByFromMemberIdAndBlockedMemberId(
             String fromMemberId, String toMemberId
     ) {
-        return blockRepository.findByFromMemberIdAndBlockedMemberId(fromMemberId, toMemberId);
+        return blockRepository.findByMemberAndBlockedMember(fromMemberId, toMemberId);
     }
 
     public Block create(String fromMemberId, String toMemberId) {

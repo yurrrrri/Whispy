@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface FollowRepository extends MongoRepository<Follow, String> {
 
-    Optional<Follow> findByFromMemberIdAndFollowedMemberId(String fromMemberId, String toMemberId);
+    Optional<Follow> findByMemberAndFollowedMember(String fromMemberId, String toMemberId);
 
 }

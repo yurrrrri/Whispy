@@ -24,7 +24,7 @@ public class FollowService {
     public Optional<Follow> findByFromMemberIdAndFollowedMemberId(
             String fromMemberId, String toMemberId
     ) {
-        return followRepository.findByFromMemberIdAndFollowedMemberId(fromMemberId, toMemberId);
+        return followRepository.findByMemberAndFollowedMember(fromMemberId, toMemberId);
     }
 
     public Follow create(String fromMemberId, String toMemberId) {

@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface BlockRepository extends MongoRepository<Block, String> {
 
-    Optional<Block> findByFromMemberIdAndBlockedMemberId(String fromMemberId, String toMemberId);
+    Optional<Block> findByMemberAndBlockedMember(String fromMemberId, String toMemberId);
 
 }
