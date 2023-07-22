@@ -1,7 +1,6 @@
 package com.syr.whispy.member.service;
 
 import com.syr.whispy.base.exception.DataNotFoundException;
-import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.dto.MemberUpdateDto;
 import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.MemberRepository;
@@ -13,7 +12,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
-import static com.syr.whispy.member.code.MemberErrorCode.USERNAME_ALREADY_EXISTS;
 
 @RequiredArgsConstructor
 @Service
@@ -35,8 +33,7 @@ public class MemberService {
     }
 
     public Member findByUsernameAndGet(String username) {
-        return findByUsername(username)
-                .orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
+        return findByUsername(username).orElseGet(() -> join(username));
     }
 
     public void verify(String memberId) {
@@ -52,15 +49,12 @@ public class MemberService {
     }
 
     public Member join(String username) {
-        if (findByUsername(username).isPresent()) {
-            throw new DuplicateFieldException(USERNAME_ALREADY_EXISTS);
-        }
-
-        return memberRepository.insert(Member.builder()
-                .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
-                .username(username)
-                .build());
+        return findByUsername(username)
+                .orElseGet(() -> memberRepository.insert(Member.builder()
+                        .id(UUID.randomUUID().toString())
+                        .createDate(LocalDateTime.now())
+                        .username(username)
+                        .build()));
     }
 
     public Member update(MemberUpdateDto dto) {
