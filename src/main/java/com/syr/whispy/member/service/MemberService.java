@@ -49,11 +49,19 @@ public class MemberService {
     }
 
     public Member join(String username) {
+        String newUsername = username;
+
+        if (username.contains("{id=") && username.contains("}")) {
+            newUsername = username.replace("{id=", "").replace("}", "");
+        }
+
+        final String finalUsername = newUsername;
+
         return findByUsername(username)
                 .orElseGet(() -> memberRepository.insert(Member.builder()
                         .id(UUID.randomUUID().toString())
                         .createDate(LocalDateTime.now())
-                        .username(username)
+                        .username(finalUsername)
                         .build()));
     }
 
