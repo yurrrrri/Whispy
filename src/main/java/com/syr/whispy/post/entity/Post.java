@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Document(collection = "post")
-public class Post extends BaseEntity {
+public class Post extends BaseEntity implements Comparable<Post> {
 
     private String writer;
 
@@ -23,5 +23,10 @@ public class Post extends BaseEntity {
     private List<String> tags;
 
     private List<String> likeMembers;
+
+    @Override
+    public int compareTo(Post other) {
+        return other.getCreateDate().compareTo(this.getCreateDate());
+    }
 
 }

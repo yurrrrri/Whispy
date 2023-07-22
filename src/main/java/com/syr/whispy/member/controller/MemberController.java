@@ -9,13 +9,16 @@ import com.syr.whispy.post.entity.Tag;
 import com.syr.whispy.post.service.PostService;
 import com.syr.whispy.post.service.TagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -28,13 +31,15 @@ public class MemberController {
     private final PostService postService;
     private final TagService tagService;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
     public String login() {
         return "usr/login";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
-    public String showMyPage(Model model, Principal principal) {
+    public String showMyPage(Model model, @AuthenticationPrincipal OAuth2User principal) {
         Member member = memberService.findByUsernameAndGet(principal.getName());
 
         List<Post> posts = postService.findByWriter(member.getUsername());
@@ -51,13 +56,16 @@ public class MemberController {
         return "usr/me";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/timeline")
-    public String showMyTimeline(Model model, Principal principal) {
+    public String showMyTimeline(Model model, @AuthenticationPrincipal OAuth2User principal) {
         Member member = memberService.findByUsernameAndGet(principal.getName());
         List<Follow> followings = followService.findByFromMemberId(member.getId());
 
         List<Post> posts = new ArrayList<>();
         followings.forEach(f -> posts.addAll(postService.findByWriter(f.getFollowedMember())));
+
+        Collections.sort(posts);
 
         model.addAttribute("posts", posts);
         return "usr/timeline";

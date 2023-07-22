@@ -9,7 +9,14 @@
 </head>
 <body>
 <main layout:fragment="main">
-
+    <div th:if="${#lists.isEmpty(posts)}">
+        타임라인에 표시할 글이 없습니다. <i class="fa-solid fa-face-frown"></i>
+    </div>
+    <div th:if="${!#lists.isEmpty(posts)}">
+        <div th:each="post : ${posts}">
+            <span th:text="${post.writer}"></span>
+        </div>
+    </div>
 </main>
 </body>
 </html>
