@@ -20,7 +20,7 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping("/list")
-    public String getAllTagList(Model model) {
+    public String showEntireTagList(Model model) {
         model.addAttribute("tags", tagService.findAll());
         return "tag/list";
     }
