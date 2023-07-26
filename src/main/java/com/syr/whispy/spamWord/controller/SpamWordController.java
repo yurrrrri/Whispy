@@ -20,7 +20,7 @@ public class SpamWordController {
     private final SpamWordService spamWordService;
 
     @GetMapping("/list")
-    public String getAllSpamWordList(Model model) {
+    public String showEntireSpamWordList(Model model) {
         model.addAttribute("spamWords", spamWordService.findAll());
         return "spam/list";
     }
