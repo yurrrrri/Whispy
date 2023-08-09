@@ -1,11 +1,9 @@
 package com.syr.whispy.member.dto;
 
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDateTime;
 

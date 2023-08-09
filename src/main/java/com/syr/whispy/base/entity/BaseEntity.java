@@ -9,7 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @NoArgsConstructor
