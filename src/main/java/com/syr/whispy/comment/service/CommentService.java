@@ -31,6 +31,16 @@ public class CommentService {
         return commentRepository.findById(id);
     }
 
+    public Comment findByIdAndGet(String id) {
+        Optional<Comment> opComment = findById(id);
+
+        if (opComment.isEmpty()) {
+            throw new DataNotFoundException(COMMENT_NOT_EXISTS);
+        }
+
+        return opComment.get();
+    }
+
     public List<Comment> findByPostId(String postId) {
         return commentRepository.findByPost(postId);
     }
@@ -55,19 +65,29 @@ public class CommentService {
     }
 
     public Comment update(CommentUpdateDto dto) {
-        Optional<Comment> opComment = findById(dto.getComment());
-
-        if (opComment.isEmpty()) {
-            throw new DataNotFoundException(COMMENT_NOT_EXISTS);
-        }
-
-        Comment comment = opComment.get();
+        Comment comment = findByIdAndGet(dto.getComment());
 
         return commentRepository.save(comment.toBuilder()
                 .modifyDate(LocalDateTime.now())
                 .content(dto.getContent())
                 .build()
         );
+    }
+
+    public void softDelete(String id) {
+        Comment comment = findByIdAndGet(id);
+
+        commentRepository.save(comment.toBuilder()
+                .deleteDate(LocalDateTime.now())
+                .build());
+    }
+
+    public void hardDelete(String id) {
+        if (!commentRepository.existsById(id)) {
+            throw new DataNotFoundException(COMMENT_NOT_EXISTS);
+        }
+
+        commentRepository.deleteById(id);
     }
 
 }
