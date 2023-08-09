@@ -35,6 +35,7 @@ public class TagService {
         return tagRepository.findAll();
     }
 
+    @PreAuthorize("isAuthenticated()")
     public Tag create(String name) {
         verifyNotExistsTagByName(name);
 
@@ -45,10 +46,10 @@ public class TagService {
         );
     }
 
-    public void delete(String tagId) {
-        verifyExistsTagById(tagId);
+    public void delete(String id) {
+        verifyExistsTagById(id);
 
-        tagRepository.deleteById(tagId);
+        tagRepository.deleteById(id);
     }
 
     private void verifyNotExistsTagByName(String name) {

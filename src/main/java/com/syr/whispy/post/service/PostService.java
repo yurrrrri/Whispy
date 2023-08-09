@@ -61,8 +61,8 @@ public class PostService {
         );
     }
 
-    public void softDelete(String postId) {
-        Post post = findByIdAndGet(postId);
+    public void softDelete(String id) {
+        Post post = findByIdAndGet(id);
 
         postRepository.save(post.toBuilder()
                 .deleteDate(LocalDateTime.now())
@@ -70,10 +70,12 @@ public class PostService {
         );
     }
 
-    public void hardDelete(String postId) {
-        Post post = findByIdAndGet(postId);
+    public void hardDelete(String id) {
+        if (!postRepository.existsById(id)) {
+            throw new DataNotFoundException(POST_NOT_EXISTS);
+        }
 
-        postRepository.delete(post);
+        postRepository.deleteById(id);
     }
 
 }
