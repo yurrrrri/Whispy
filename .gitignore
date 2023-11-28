@@ -149,6 +149,6 @@ $RECYCLE.BIN/
 *.lnk
 
 .gradle/*
-application-secret.yml
+src/main/resources/application-secret.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij+all

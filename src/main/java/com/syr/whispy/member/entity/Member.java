@@ -1,13 +1,12 @@
 package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -20,16 +19,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Document(collection = "member")
 public class Member extends BaseEntity {
 
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String username;
 
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String nickname;
 
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String email;
 
     private LocalDateTime birthday;

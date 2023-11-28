@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -13,20 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Document(collection = "post")
 public class Post extends BaseEntity implements Comparable<Post> {
 
     private String writer;
-
     private String content;
-
     private List<String> tags;
-
     private List<String> likeMembers;
 
     @Override
     public int compareTo(Post other) {
         return other.getCreateDate().compareTo(this.getCreateDate());
     }
-
 }
