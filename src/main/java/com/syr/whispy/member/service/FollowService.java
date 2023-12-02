@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.member.code.MemberErrorCode.ALREADY_FOLLOWED;
 
@@ -22,9 +21,7 @@ public class FollowService {
 
     private final FollowRepository followRepository;
 
-    public Optional<Follow> findByFromMemberAndFollowedMember(
-            Member fromMember, Member toMember
-    ) {
+    public Optional<Follow> findByFromMemberAndFollowedMember(Member fromMember, Member toMember) {
         return followRepository.findByMemberAndFollowedMember(fromMember, toMember);
     }
 
@@ -39,10 +36,9 @@ public class FollowService {
         }
 
         return followRepository.save(Follow.builder()
-                .id(UUID.randomUUID().toString())
-                .createdDate(LocalDateTime.now())
                 .member(fromMember)
                 .followedMember(toMember)
+                .createdDate(LocalDateTime.now())
                 .build()
         );
     }

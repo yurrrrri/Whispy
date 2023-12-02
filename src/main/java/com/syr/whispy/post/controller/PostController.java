@@ -34,7 +34,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public String showPostDetail(@PathVariable String id, Model model) {
+    public String showPostDetail(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.findByIdAndGet(id));
         return "post/detail";
     }
@@ -51,26 +51,26 @@ public class PostController {
     }
 
     @GetMapping("/update/{id}")
-    public String updatePost(@PathVariable String id, Model model) {
+    public String updatePost(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.findByIdAndGet(id));
         return "post/update";
     }
 
     @PostMapping("/update/{id}")
-    public String updatePost(@PathVariable String id, @Valid PostUpdateDto dto) {
+    public String updatePost(@PathVariable Long id, @Valid PostUpdateDto dto) {
         postService.update(dto);
-        return "redirect:/post/%s".formatted(id);
+        return "redirect:/post/%d".formatted(id);
     }
 
     @GetMapping("/delete/{id}")
-    public String softDeletePost(@PathVariable String id) {
+    public String softDeletePost(@PathVariable Long id) {
         postService.softDelete(id);
         return "redirect:/post/list";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/delete/hard/{id}")
-    public String hardDeletePost(@PathVariable String id) {
+    public String hardDeletePost(@PathVariable Long id) {
         postService.hardDelete(id);
         return "redirect:/post/list";
     }

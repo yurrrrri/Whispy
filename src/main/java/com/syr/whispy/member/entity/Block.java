@@ -15,7 +15,8 @@ import lombok.experimental.SuperBuilder;
 public class Block extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;

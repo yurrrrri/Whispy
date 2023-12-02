@@ -18,11 +18,11 @@ public class ChatService {
 
     private final ChatRepository chatRepository;
 
-    public Optional<Chat> findById(String id) {
+    public Optional<Chat> findById(Long id) {
         return chatRepository.findById(id);
     }
 
-    public Chat findByIdAndGet(String id) {
+    public Chat findByIdAndGet(Long id) {
         return findById(id).orElseThrow(() -> new DataNotFoundException(CHAT_NOT_EXISTS));
     }
 }

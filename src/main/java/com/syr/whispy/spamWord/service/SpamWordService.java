@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.spamWord.code.SpamWordErrorCode.SPAM_WORD_ALREADY_EXISTS;
 
@@ -21,7 +20,7 @@ public class SpamWordService {
 
     private final SpamWordRepository spamWordRepository;
 
-    public Optional<SpamWord> findById(String id) {
+    public Optional<SpamWord> findById(Long id) {
         return spamWordRepository.findById(id);
     }
 
@@ -40,7 +39,6 @@ public class SpamWordService {
         }
 
         return spamWordRepository.save(SpamWord.builder()
-                .id(UUID.randomUUID().toString())
                 .word(dto.getWord())
                 .build()
         );

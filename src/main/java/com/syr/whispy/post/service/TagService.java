@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.post.code.TagErrorCode.TAG_ALREADY_EXISTS;
 import static com.syr.whispy.post.code.TagErrorCode.TAG_NOT_EXISTS;
@@ -25,14 +24,13 @@ public class TagService {
     private final TagRepository tagRepository;
 
     @Transactional(readOnly = true)
-    public Optional<Tag> findById(String id) {
+    public Optional<Tag> findById(Long id) {
         return tagRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public Tag findByIdAndGet(String id) {
-        return tagRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException(TAG_NOT_EXISTS));
+    public Tag findByIdAndGet(Long id) {
+        return tagRepository.findById(id).orElseThrow(() -> new DataNotFoundException(TAG_NOT_EXISTS));
     }
 
     @Transactional(readOnly = true)
@@ -45,13 +43,12 @@ public class TagService {
         verifyNotExistsTagByName(name);
 
         return tagRepository.save(Tag.builder()
-                .id(UUID.randomUUID().toString())
                 .name(name)
                 .build()
         );
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         verifyExistsTagById(id);
 
         tagRepository.deleteById(id);
@@ -63,7 +60,7 @@ public class TagService {
         }
     }
 
-    private void verifyExistsTagById(String id) {
+    private void verifyExistsTagById(Long id) {
         if (tagRepository.findById(id).isEmpty()) {
             throw new DataNotFoundException(TAG_NOT_EXISTS);
         }

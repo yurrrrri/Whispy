@@ -3,6 +3,7 @@ package com.syr.whispy.chat.entity;
 import com.syr.whispy.base.entity.BaseEntity;
 import com.syr.whispy.member.entity.Member;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,8 @@ import java.util.List;
 public class Chat extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Builder.Default
     @OneToMany

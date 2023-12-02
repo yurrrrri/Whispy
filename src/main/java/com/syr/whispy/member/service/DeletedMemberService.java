@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Transactional
@@ -20,7 +19,6 @@ public class DeletedMemberService {
     public DeletedMember create(DeletedMemberDto dto) {
         return deletedMemberRepository.save(
                 DeletedMember.builder()
-                        .id(UUID.randomUUID().toString())
                         .username(dto.getUsername())
                         .nickname(dto.getNickname())
                         .email(dto.getEmail())

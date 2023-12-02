@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.post.code.PostErrorCode.POST_NOT_EXISTS;
 
@@ -25,19 +24,13 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public Optional<Post> findById(String id) {
+    public Optional<Post> findById(Long id) {
         return postRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public Post findByIdAndGet(String id) {
-        Optional<Post> opPost = findById(id);
-
-        if (opPost.isEmpty()) {
-            throw new DataNotFoundException(POST_NOT_EXISTS);
-        }
-
-        return opPost.get();
+    public Post findByIdAndGet(Long id) {
+        return findById(id).orElseThrow(() -> new DataNotFoundException(POST_NOT_EXISTS));
     }
 
     @Transactional(readOnly = true)
@@ -47,17 +40,16 @@ public class PostService {
 
     public Post create(PostCreateDto dto) {
         return postRepository.save(Post.builder()
-                .id(UUID.randomUUID().toString())
-                .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
                 .content(dto.getContent())
                 .tags(dto.getTags())
+                .createdDate(LocalDateTime.now())
                 .build()
         );
     }
 
     public Post update(PostUpdateDto dto) {
-        Post post = findByIdAndGet(dto.getPost().getId());
+        Post post = findByIdAndGet(dto.getPostId());
 
         return postRepository.save(post.toBuilder()
                 .content(dto.getContent())
@@ -67,7 +59,7 @@ public class PostService {
         );
     }
 
-    public void softDelete(String id) {
+    public void softDelete(Long id) {
         Post post = findByIdAndGet(id);
 
         postRepository.save(post.toBuilder()
@@ -76,7 +68,7 @@ public class PostService {
         );
     }
 
-    public void hardDelete(String id) {
+    public void hardDelete(Long id) {
         if (!postRepository.existsById(id)) {
             throw new DataNotFoundException(POST_NOT_EXISTS);
         }

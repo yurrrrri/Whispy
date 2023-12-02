@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.member.code.MemberErrorCode.ALREADY_BLOCKED;
 
@@ -34,10 +33,9 @@ public class BlockService {
         }
 
         return blockRepository.save(Block.builder()
-                .id(UUID.randomUUID().toString())
-                .createdDate(LocalDateTime.now())
                 .member(fromMember)
                 .blockedMember(toMember)
+                .createdDate(LocalDateTime.now())
                 .build()
         );
     }

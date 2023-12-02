@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SubCommentRepository extends JpaRepository<SubComment, String> {
+public interface SubCommentRepository extends JpaRepository<SubComment, Long> {
 
     List<SubComment> findByComment(Comment comment);
 }

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SpamWordRepository extends JpaRepository<SpamWord, String> {
+public interface SpamWordRepository extends JpaRepository<SpamWord, Long> {
 
     Optional<SpamWord> findByWord(String word);
 }

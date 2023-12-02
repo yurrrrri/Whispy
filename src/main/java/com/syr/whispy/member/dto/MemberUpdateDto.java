@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MemberUpdateDto {
 
-    private String memberId;
+    private Long memberId;
     private String nickname;
     private String email;
     private LocalDateTime birthday;

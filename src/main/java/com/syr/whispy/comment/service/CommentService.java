@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.comment.code.CommentErrorCode.COMMENT_NOT_EXISTS;
 
@@ -25,12 +24,12 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional(readOnly = true)
-    public Optional<Comment> findById(String id) {
+    public Optional<Comment> findById(Long id) {
         return commentRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public Comment findByIdAndGet(String id) {
+    public Comment findByIdAndGet(Long id) {
         return findById(id).orElseThrow(() -> new DataNotFoundException(COMMENT_NOT_EXISTS));
     }
 
@@ -41,28 +40,27 @@ public class CommentService {
 
     public Comment create(CommentCreateDto dto) {
         return commentRepository.save(Comment.builder()
-                .id(UUID.randomUUID().toString())
-                .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
                 .post(dto.getPost())
                 .content(dto.getContent())
+                .createdDate(LocalDateTime.now())
                 .build()
         );
     }
 
-    public Comment update(String commentId, CommentUpdateDto dto) {
-        Comment comment = findByIdAndGet(commentId);
+    public Comment update(Long id, CommentUpdateDto dto) {
+        Comment comment = findByIdAndGet(id);
 
         return commentRepository.save(comment.toBuilder()
-                .modifiedDate(LocalDateTime.now())
                 .content(dto.getContent())
+                .modifiedDate(LocalDateTime.now())
                 .build()
         );
     }
 
-    public String softDelete(String id) {
+    public Long softDelete(Long id) {
         Comment comment = findByIdAndGet(id);
-        String postId = comment.getPost().getId();
+        Long postId = comment.getPost().getId();
 
         commentRepository.save(comment.toBuilder()
                 .deletedDate(LocalDateTime.now())
@@ -71,13 +69,13 @@ public class CommentService {
         return postId;
     }
 
-    public String hardDelete(String id) {
+    public Long hardDelete(Long id) {
         if (!commentRepository.existsById(id)) {
             throw new DataNotFoundException(COMMENT_NOT_EXISTS);
         }
 
         Comment comment = findByIdAndGet(id);
-        String postId = comment.getPost().getId();
+        Long postId = comment.getPost().getId();
         commentRepository.delete(comment);
 
         return postId;

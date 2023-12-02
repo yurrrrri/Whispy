@@ -30,31 +30,31 @@ public class CommentController {
     @PostMapping("/create")
     public String create(@Valid CommentCreateDto dto) {
         commentService.create(dto);
-        return "redirect:/post/%s".formatted(dto.getPost());
+        return "redirect:/post/%d".formatted(dto.getPost().getId());
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable String id, Model model) {
+    public String update(@PathVariable Long id, Model model) {
         Comment comment = commentService.findByIdAndGet(id);
         model.addAttribute("comment", comment);
         return "comment/update";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable String id, @Valid CommentUpdateDto dto) {
+    public String update(@PathVariable Long id, @Valid CommentUpdateDto dto) {
         Comment comment = commentService.update(id, dto);
-        return "redirect:/post/%s".formatted(comment.getPost().getId());
+        return "redirect:/post/%d".formatted(comment.getPost().getId());
     }
 
     @GetMapping("/delete/{id}")
-    public String softDelete(@PathVariable String id) {
-        String postId = commentService.softDelete(id);
-        return "redirect:/post/%s".formatted(postId);
+    public String softDelete(@PathVariable Long id) {
+        Long postId = commentService.softDelete(id);
+        return "redirect:/post/%d".formatted(postId);
     }
 
     @GetMapping("/delete/hard/{id}")
-    public String hardDelete(@PathVariable String id) {
-        String postId = commentService.hardDelete(id);
-        return "redirect:/post/%s".formatted(postId);
+    public String hardDelete(@PathVariable Long id) {
+        Long postId = commentService.hardDelete(id);
+        return "redirect:/post/%d".formatted(postId);
     }
 }

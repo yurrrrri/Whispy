@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.comment.code.SubCommentErrorCode.SUB_COMMENT_NOT_EXISTS;
 
@@ -24,11 +23,11 @@ public class SubCommentService {
 
     private final SubCommentRepository subCommentRepository;
 
-    public Optional<SubComment> findById(String id) {
+    public Optional<SubComment> findById(Long id) {
         return subCommentRepository.findById(id);
     }
 
-    public SubComment findByIdAndGet(String id) {
+    public SubComment findByIdAndGet(Long id) {
         return findById(id).orElseThrow(() -> new DataNotFoundException(SUB_COMMENT_NOT_EXISTS));
     }
 
@@ -39,31 +38,30 @@ public class SubCommentService {
     @Transactional
     public SubComment create(SubCommentCreateDto dto) {
         return subCommentRepository.save(SubComment.builder()
-                .id(UUID.randomUUID().toString())
-                .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
                 .post(dto.getPost())
                 .comment(dto.getComment())
                 .content(dto.getContent())
+                .createdDate(LocalDateTime.now())
                 .build()
         );
     }
 
     @Transactional
-    public SubComment update(String id, SubCommentUpdateDto dto) {
+    public SubComment update(Long id, SubCommentUpdateDto dto) {
         SubComment subComment = findByIdAndGet(id);
 
         return subCommentRepository.save(subComment.toBuilder()
-                .modifiedDate(LocalDateTime.now())
                 .content(dto.getContent())
+                .modifiedDate(LocalDateTime.now())
                 .build()
         );
     }
 
     @Transactional
-    public String softDelete(String id) {
+    public Long softDelete(Long id) {
         SubComment subComment = findByIdAndGet(id);
-        String postId = subComment.getPost().getId();
+        Long postId = subComment.getPost().getId();
 
         subCommentRepository.save(subComment.toBuilder()
                 .deletedDate(LocalDateTime.now())
@@ -73,12 +71,12 @@ public class SubCommentService {
     }
 
     @Transactional
-    public String hardDelete(String id) {
+    public Long hardDelete(Long id) {
         if (!subCommentRepository.existsById(id)) {
             throw new DataNotFoundException(SUB_COMMENT_NOT_EXISTS);
         }
 
-        String postId = findByIdAndGet(id).getPost().getId();
+        Long postId = findByIdAndGet(id).getPost().getId();
         subCommentRepository.deleteById(id);
 
         return postId;

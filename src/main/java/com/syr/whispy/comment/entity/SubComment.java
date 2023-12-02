@@ -3,10 +3,7 @@ package com.syr.whispy.comment.entity;
 import com.syr.whispy.base.entity.BaseEntity;
 import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.post.entity.Post;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +18,8 @@ import lombok.experimental.SuperBuilder;
 public class SubComment extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;

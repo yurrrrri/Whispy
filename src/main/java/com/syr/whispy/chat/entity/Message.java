@@ -2,10 +2,7 @@ package com.syr.whispy.chat.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
 import com.syr.whispy.member.entity.Member;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +17,8 @@ import lombok.experimental.SuperBuilder;
 public class Message extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Chat chat;

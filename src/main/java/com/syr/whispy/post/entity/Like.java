@@ -2,14 +2,12 @@ package com.syr.whispy.post.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
 import com.syr.whispy.member.entity.Member;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +16,8 @@ import lombok.experimental.SuperBuilder;
 public class Like extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;

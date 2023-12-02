@@ -1,6 +1,5 @@
 package com.syr.whispy.post.dto;
 
-import com.syr.whispy.post.entity.Post;
 import com.syr.whispy.post.entity.Tag;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PostUpdateDto {
 
-    private Post post;
+    private Long postId;
 
     @NotBlank
     private String content;

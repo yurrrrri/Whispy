@@ -30,31 +30,31 @@ public class SubCommentController {
     @PostMapping("/create")
     public String create(@Valid SubCommentCreateDto dto) {
         subCommentService.create(dto);
-        return "redirect:/post/%s".formatted(dto.getPost().getId());
+        return "redirect:/post/%d".formatted(dto.getPost().getId());
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable String id, Model model) {
+    public String update(@PathVariable Long id, Model model) {
         SubComment subComment = subCommentService.findByIdAndGet(id);
         model.addAttribute("subComment", subComment);
         return "subComment/update";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable String id, @Valid SubCommentUpdateDto dto) {
+    public String update(@PathVariable Long id, @Valid SubCommentUpdateDto dto) {
         SubComment subComment = subCommentService.update(id, dto);
-        return "redirect:/post/%s".formatted(subComment.getPost().getId());
+        return "redirect:/post/%d".formatted(subComment.getPost().getId());
     }
 
     @GetMapping("/delete/{id}")
-    public String softDelete(@PathVariable String id) {
-        String postId = subCommentService.softDelete(id);
-        return "redirect:/post/%s".formatted(postId);
+    public String softDelete(@PathVariable Long id) {
+        Long postId = subCommentService.softDelete(id);
+        return "redirect:/post/%d".formatted(postId);
     }
 
     @GetMapping("/delete/hard/{id}")
-    public String hardDelete(@PathVariable String id) {
-        String postId = subCommentService.hardDelete(id);
-        return "redirect:/post/%s".formatted(postId);
+    public String hardDelete(@PathVariable Long id) {
+        Long postId = subCommentService.hardDelete(id);
+        return "redirect:/post/%d".formatted(postId);
     }
 }

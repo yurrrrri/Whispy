@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @SuperBuilder(toBuilder = true)
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+
     @CreatedDate
     private LocalDateTime createdDate;
 

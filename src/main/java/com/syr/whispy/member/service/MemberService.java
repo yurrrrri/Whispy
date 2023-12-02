@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 
@@ -21,11 +20,11 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Optional<Member> findById(String id) {
+    public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
     }
 
-    public Member findByIdAndGet(String id) {
+    public Member findByIdAndGet(Long id) {
         return findById(id).orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
     }
 
@@ -41,9 +40,8 @@ public class MemberService {
     public Member join(String username) {
         return findByUsername(username)
                 .orElseGet(() -> memberRepository.save(Member.builder()
-                        .id(UUID.randomUUID().toString())
-                        .createdDate(LocalDateTime.now())
                         .username(username)
+                        .createdDate(LocalDateTime.now())
                         .build()));
     }
 
@@ -52,18 +50,18 @@ public class MemberService {
         Member member = findByIdAndGet(dto.getMemberId());
 
         return memberRepository.save(member.toBuilder()
-                .modifiedDate(LocalDateTime.now())
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
                 .birthday(dto.getBirthday())
                 .image(dto.getImage())
                 .description(dto.getDescription())
+                .modifiedDate(LocalDateTime.now())
                 .build()
         );
     }
 
     @Transactional
-    public Member softDelete(String id) {
+    public Member softDelete(Long id) {
         Member member = findByIdAndGet(id);
 
         return memberRepository.save(member.toBuilder()

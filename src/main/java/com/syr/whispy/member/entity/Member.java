@@ -2,11 +2,7 @@ package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
 import com.syr.whispy.post.entity.Like;
-import com.syr.whispy.post.entity.Post;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +26,8 @@ import java.util.Set;
 public class Member extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Column(unique = true)
     private String username;
