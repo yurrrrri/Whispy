@@ -1,7 +1,6 @@
 package com.syr.whispy.base.entity;
 
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +17,6 @@ import java.time.LocalDateTime;
 @SuperBuilder(toBuilder = true)
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-
-    @Id
-    private String id;
-
     @CreatedDate
     private LocalDateTime createdDate;
 

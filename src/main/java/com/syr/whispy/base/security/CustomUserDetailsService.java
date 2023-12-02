@@ -9,10 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -25,5 +27,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new User(member.getUsername(), "", member.getAuthorities());
     }
-
 }

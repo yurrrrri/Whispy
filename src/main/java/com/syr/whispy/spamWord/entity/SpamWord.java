@@ -12,11 +12,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Entity
+@Entity(name = "spam_word")
 public class SpamWord {
 
     @Id
     private String id;
+
     @Column(unique = true)
     private String word;
 }

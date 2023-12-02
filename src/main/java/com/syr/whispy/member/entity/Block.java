@@ -1,9 +1,7 @@
 package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
+@Entity(name = "block")
 public class Block extends BaseEntity {
+
+    @Id
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;

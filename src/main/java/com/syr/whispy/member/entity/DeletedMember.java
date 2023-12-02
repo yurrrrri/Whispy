@@ -17,12 +17,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Entity
 @EntityListeners(AuditingEntityListener.class)
+@Entity(name = "deleted_member")
 public class DeletedMember {
 
     @Id
     private String id;
+
     @Column(unique = true)
     private String username;
     @Column(unique = true)

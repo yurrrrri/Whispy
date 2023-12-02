@@ -42,7 +42,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<Post> findByWriter(Member writer) {
-        return postRepository.findByWriter(writer.getUsername());
+        return postRepository.findByWriter(writer);
     }
 
     public Post create(PostCreateDto dto) {

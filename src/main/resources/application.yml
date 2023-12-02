@@ -37,7 +37,7 @@ spring:
             user-name-attribute: id
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
 
 base:
   url: 'http://localhost:8080'

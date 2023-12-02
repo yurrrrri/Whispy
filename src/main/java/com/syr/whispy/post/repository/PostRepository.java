@@ -1,13 +1,12 @@
 package com.syr.whispy.post.repository;
 
+import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface PostRepository extends JpaRepository<Post, String> {
 
-    List<Post> findByWriter(String username);
+    List<Post> findByWriter(Member writer);
 }

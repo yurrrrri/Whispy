@@ -1,8 +1,12 @@
 package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
+import com.syr.whispy.post.entity.Like;
 import com.syr.whispy.post.entity.Post;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +17,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +26,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
+@Entity(name = "member")
 public class Member extends BaseEntity {
+
+    @Id
+    private String id;
 
     @Column(unique = true)
     private String username;
@@ -39,7 +47,8 @@ public class Member extends BaseEntity {
     private String description;
 
     @Builder.Default
-    private List<Post> starredPosts = new LinkedList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Like> likes = new ArrayList<>();
 
     @Builder.Default
     private Set<Role> authorities = new HashSet<>();
