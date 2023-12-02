@@ -9,10 +9,6 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class CommentUpdateDto {
-
-    private String comment;
-
     @NotBlank
     private String content;
-
 }

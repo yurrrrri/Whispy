@@ -1,7 +1,6 @@
 package com.syr.whispy.base.entity;
 
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +20,6 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Id
-    @GeneratedValue
     private String id;
 
     @CreatedDate

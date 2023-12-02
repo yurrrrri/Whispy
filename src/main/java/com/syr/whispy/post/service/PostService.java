@@ -1,12 +1,14 @@
 package com.syr.whispy.post.service;
 
 import com.syr.whispy.base.exception.DataNotFoundException;
+import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.post.dto.PostCreateDto;
 import com.syr.whispy.post.dto.PostUpdateDto;
 import com.syr.whispy.post.entity.Post;
 import com.syr.whispy.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,15 +18,18 @@ import java.util.UUID;
 import static com.syr.whispy.post.code.PostErrorCode.POST_NOT_EXISTS;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
 
+    @Transactional(readOnly = true)
     public Optional<Post> findById(String id) {
         return postRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public Post findByIdAndGet(String id) {
         Optional<Post> opPost = findById(id);
 
@@ -35,12 +40,13 @@ public class PostService {
         return opPost.get();
     }
 
-    public List<Post> findByWriter(String username) {
-        return postRepository.findByWriter(username);
+    @Transactional(readOnly = true)
+    public List<Post> findByWriter(Member writer) {
+        return postRepository.findByWriter(writer.getUsername());
     }
 
     public Post create(PostCreateDto dto) {
-        return postRepository.insert(Post.builder()
+        return postRepository.save(Post.builder()
                 .id(UUID.randomUUID().toString())
                 .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
@@ -51,7 +57,7 @@ public class PostService {
     }
 
     public Post update(PostUpdateDto dto) {
-        Post post = findByIdAndGet(dto.getPost());
+        Post post = findByIdAndGet(dto.getPost().getId());
 
         return postRepository.save(post.toBuilder()
                 .content(dto.getContent())
@@ -77,5 +83,4 @@ public class PostService {
 
         postRepository.deleteById(id);
     }
-
 }

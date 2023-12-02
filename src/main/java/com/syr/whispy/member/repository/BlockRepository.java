@@ -1,14 +1,14 @@
 package com.syr.whispy.member.repository;
 
 import com.syr.whispy.member.entity.Block;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.syr.whispy.member.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface BlockRepository extends MongoRepository<Block, String> {
+public interface BlockRepository extends JpaRepository<Block, String> {
 
-    Optional<Block> findByMemberAndBlockedMember(String fromMemberId, String toMemberId);
-
+    Optional<Block> findByMemberAndBlockedMember(Member fromMember, Member toMember);
 }

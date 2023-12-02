@@ -14,5 +14,4 @@ public class TagCreateDto {
     @NotBlank
     @Size(min = 1, max = 30)
     private String name;
-
 }

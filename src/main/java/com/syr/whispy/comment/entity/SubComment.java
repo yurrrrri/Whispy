@@ -2,6 +2,7 @@ package com.syr.whispy.comment.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
 import com.syr.whispy.member.entity.Member;
+import com.syr.whispy.post.entity.Post;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
@@ -18,6 +19,8 @@ public class SubComment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 

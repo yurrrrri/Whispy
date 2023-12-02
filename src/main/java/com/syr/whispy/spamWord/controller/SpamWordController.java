@@ -35,5 +35,4 @@ public class SpamWordController {
         spamWordService.create(dto);
         return "redirect:/spam/list";
     }
-
 }

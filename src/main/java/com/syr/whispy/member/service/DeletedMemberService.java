@@ -5,18 +5,20 @@ import com.syr.whispy.member.entity.DeletedMember;
 import com.syr.whispy.member.repository.DeletedMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class DeletedMemberService {
 
     private final DeletedMemberRepository deletedMemberRepository;
 
     public DeletedMember create(DeletedMemberDto dto) {
-        return deletedMemberRepository.insert(
+        return deletedMemberRepository.save(
                 DeletedMember.builder()
                         .id(UUID.randomUUID().toString())
                         .username(dto.getUsername())
@@ -27,5 +29,4 @@ public class DeletedMemberService {
                         .build()
         );
     }
-
 }

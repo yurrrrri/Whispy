@@ -2,9 +2,7 @@ package com.syr.whispy.comment.controller;
 
 import com.syr.whispy.comment.dto.SubCommentCreateDto;
 import com.syr.whispy.comment.dto.SubCommentUpdateDto;
-import com.syr.whispy.comment.entity.Comment;
 import com.syr.whispy.comment.entity.SubComment;
-import com.syr.whispy.comment.service.CommentService;
 import com.syr.whispy.comment.service.SubCommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SubCommentController {
 
     private final SubCommentService subCommentService;
-    private final CommentService commentService;
 
     @GetMapping("/create")
     public String create() {
@@ -33,8 +30,7 @@ public class SubCommentController {
     @PostMapping("/create")
     public String create(@Valid SubCommentCreateDto dto) {
         subCommentService.create(dto);
-        Comment comment = commentService.findByIdAndGet(dto.getComment());
-        return "redirect:/post/%s".formatted(comment.getPost());
+        return "redirect:/post/%s".formatted(dto.getPost().getId());
     }
 
     @GetMapping("/update/{id}")
@@ -45,21 +41,20 @@ public class SubCommentController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid SubCommentUpdateDto dto) {
-        SubComment subComment = subCommentService.update(dto);
-        return "redirect:/post/%s".formatted(commentService.findByIdAndGet(subComment.getComment()).getPost());
+    public String update(@PathVariable String id, @Valid SubCommentUpdateDto dto) {
+        SubComment subComment = subCommentService.update(id, dto);
+        return "redirect:/post/%s".formatted(subComment.getPost().getId());
     }
 
     @GetMapping("/delete/{id}")
     public String softDelete(@PathVariable String id) {
-        String commentId = subCommentService.softDelete(id);
-        return "redirect:/post/%s".formatted(commentService.findByIdAndGet(commentId).getPost());
+        String postId = subCommentService.softDelete(id);
+        return "redirect:/post/%s".formatted(postId);
     }
 
     @GetMapping("/delete/hard/{id}")
     public String hardDelete(@PathVariable String id) {
-        String commentId = subCommentService.hardDelete(id);
-        return "redirect:/post/%s".formatted(commentService.findByIdAndGet(commentId).getPost());
+        String postId = subCommentService.hardDelete(id);
+        return "redirect:/post/%s".formatted(postId);
     }
-
 }

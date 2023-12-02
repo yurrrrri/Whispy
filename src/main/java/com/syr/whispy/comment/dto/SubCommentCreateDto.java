@@ -1,5 +1,8 @@
 package com.syr.whispy.comment.dto;
 
+import com.syr.whispy.comment.entity.Comment;
+import com.syr.whispy.member.entity.Member;
+import com.syr.whispy.post.entity.Post;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,12 +13,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SubCommentCreateDto {
 
-    @NotBlank
-    private String writer;
-
-    private String comment;
+    private Member writer;
+    private Post post;
+    private Comment comment;
 
     @NotBlank
     private String content;
-
 }

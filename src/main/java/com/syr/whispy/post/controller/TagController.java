@@ -35,5 +35,4 @@ public class TagController {
         tagService.create(dto.getName());
         return "redirect:/tag/list";
     }
-
 }

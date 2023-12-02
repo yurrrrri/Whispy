@@ -7,6 +7,7 @@ import com.syr.whispy.post.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,20 +18,24 @@ import static com.syr.whispy.post.code.TagErrorCode.TAG_NOT_EXISTS;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class TagService {
 
     private final TagRepository tagRepository;
 
+    @Transactional(readOnly = true)
     public Optional<Tag> findById(String id) {
         return tagRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public Tag findByIdAndGet(String id) {
         return tagRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(TAG_NOT_EXISTS));
     }
 
+    @Transactional(readOnly = true)
     public List<Tag> findAll() {
         return tagRepository.findAll();
     }
@@ -39,7 +44,7 @@ public class TagService {
     public Tag create(String name) {
         verifyNotExistsTagByName(name);
 
-        return tagRepository.insert(Tag.builder()
+        return tagRepository.save(Tag.builder()
                 .id(UUID.randomUUID().toString())
                 .name(name)
                 .build()
@@ -63,5 +68,4 @@ public class TagService {
             throw new DataNotFoundException(TAG_NOT_EXISTS);
         }
     }
-
 }

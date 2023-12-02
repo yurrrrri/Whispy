@@ -3,68 +3,55 @@ package com.syr.whispy.comment.service;
 import com.syr.whispy.base.exception.DataNotFoundException;
 import com.syr.whispy.comment.dto.SubCommentCreateDto;
 import com.syr.whispy.comment.dto.SubCommentUpdateDto;
+import com.syr.whispy.comment.entity.Comment;
 import com.syr.whispy.comment.entity.SubComment;
 import com.syr.whispy.comment.repository.SubCommentRepository;
-import com.syr.whispy.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.syr.whispy.comment.code.CommentErrorCode.COMMENT_NOT_EXISTS;
 import static com.syr.whispy.comment.code.SubCommentErrorCode.SUB_COMMENT_NOT_EXISTS;
-import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class SubCommentService {
 
     private final SubCommentRepository subCommentRepository;
-    private final MemberService memberService;
-    private final CommentService commentService;
 
     public Optional<SubComment> findById(String id) {
         return subCommentRepository.findById(id);
     }
 
     public SubComment findByIdAndGet(String id) {
-        Optional<SubComment> opSubComment = findById(id);
-
-        if (opSubComment.isEmpty()) {
-            throw new DataNotFoundException(SUB_COMMENT_NOT_EXISTS);
-        }
-
-        return opSubComment.get();
+        return findById(id).orElseThrow(() -> new DataNotFoundException(SUB_COMMENT_NOT_EXISTS));
     }
 
-    public List<SubComment> findByCommentId(String commentId) {
-        return subCommentRepository.findByComment(commentId);
+    public List<SubComment> findByComment(Comment comment) {
+        return subCommentRepository.findByComment(comment);
     }
 
+    @Transactional
     public SubComment create(SubCommentCreateDto dto) {
-        if (memberService.findById(dto.getWriter()).isEmpty()) {
-            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
-        }
-
-        if (commentService.findById(dto.getComment()).isEmpty()) {
-            throw new DataNotFoundException(COMMENT_NOT_EXISTS);
-        }
-
-        return subCommentRepository.insert(SubComment.builder()
+        return subCommentRepository.save(SubComment.builder()
                 .id(UUID.randomUUID().toString())
                 .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
+                .post(dto.getPost())
                 .comment(dto.getComment())
                 .content(dto.getContent())
                 .build()
         );
     }
 
-    public SubComment update(SubCommentUpdateDto dto) {
-        SubComment subComment = findByIdAndGet(dto.getSubComment());
+    @Transactional
+    public SubComment update(String id, SubCommentUpdateDto dto) {
+        SubComment subComment = findByIdAndGet(id);
 
         return subCommentRepository.save(subComment.toBuilder()
                 .modifiedDate(LocalDateTime.now())
@@ -73,26 +60,27 @@ public class SubCommentService {
         );
     }
 
+    @Transactional
     public String softDelete(String id) {
         SubComment subComment = findByIdAndGet(id);
-        String commentId = subComment.getComment();
+        String postId = subComment.getPost().getId();
 
         subCommentRepository.save(subComment.toBuilder()
                 .deletedDate(LocalDateTime.now())
                 .build());
 
-        return commentId;
+        return postId;
     }
 
+    @Transactional
     public String hardDelete(String id) {
         if (!subCommentRepository.existsById(id)) {
             throw new DataNotFoundException(SUB_COMMENT_NOT_EXISTS);
         }
 
-        String commentId = findByIdAndGet(id).getComment();
+        String postId = findByIdAndGet(id).getPost().getId();
         subCommentRepository.deleteById(id);
 
-        return commentId;
+        return postId;
     }
-
 }

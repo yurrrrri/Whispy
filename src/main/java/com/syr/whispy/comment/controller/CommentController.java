@@ -41,25 +41,20 @@ public class CommentController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Valid CommentUpdateDto dto) {
-        Comment comment = commentService.update(dto);
-        return "redirect:/post/%s".formatted(comment.getPost());
+    public String update(@PathVariable String id, @Valid CommentUpdateDto dto) {
+        Comment comment = commentService.update(id, dto);
+        return "redirect:/post/%s".formatted(comment.getPost().getId());
     }
 
     @GetMapping("/delete/{id}")
     public String softDelete(@PathVariable String id) {
-        String postId = commentService.findByIdAndGet(id).getPost();
-
-        commentService.softDelete(id);
+        String postId = commentService.softDelete(id);
         return "redirect:/post/%s".formatted(postId);
     }
 
     @GetMapping("/delete/hard/{id}")
     public String hardDelete(@PathVariable String id) {
-        String postId = commentService.findByIdAndGet(id).getPost();
-
-        commentService.hardDelete(id);
+        String postId = commentService.hardDelete(id);
         return "redirect:/post/%s".formatted(postId);
     }
-
 }

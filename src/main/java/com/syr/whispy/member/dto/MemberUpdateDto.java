@@ -13,16 +13,10 @@ import java.time.LocalDateTime;
 public class MemberUpdateDto {
 
     private String memberId;
-
     private String nickname;
-
     private String email;
-
     private LocalDateTime birthday;
-
     private String image;
-
     @Max(50)
     private String description;
-
 }

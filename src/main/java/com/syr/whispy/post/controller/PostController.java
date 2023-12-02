@@ -29,7 +29,7 @@ public class PostController {
     @GetMapping("/list")
     public String showMyEntirePostList(Model model, @AuthenticationPrincipal OAuth2User principal) {
         Member member = memberService.findByUsernameAndGet(principal.getName());
-        model.addAttribute("posts", postService.findByWriter(member.getUsername()));
+        model.addAttribute("posts", postService.findByWriter(member));
         return "post/list";
     }
 
@@ -69,10 +69,9 @@ public class PostController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/hardDelete/{id}")
+    @GetMapping("/delete/hard/{id}")
     public String hardDeletePost(@PathVariable String id) {
         postService.hardDelete(id);
         return "redirect:/post/list";
     }
-
 }

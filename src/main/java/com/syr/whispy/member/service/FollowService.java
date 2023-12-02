@@ -1,11 +1,12 @@
 package com.syr.whispy.member.service;
 
-import com.syr.whispy.base.exception.DataNotFoundException;
 import com.syr.whispy.base.exception.DuplicateFieldException;
 import com.syr.whispy.member.entity.Follow;
+import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,42 +14,36 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.syr.whispy.member.code.MemberErrorCode.ALREADY_FOLLOWED;
-import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class FollowService {
 
     private final FollowRepository followRepository;
-    private final MemberService memberService;
 
-    public Optional<Follow> findByFromMemberIdAndFollowedMemberId(
-            String fromMemberId, String toMemberId
+    public Optional<Follow> findByFromMemberAndFollowedMember(
+            Member fromMember, Member toMember
     ) {
-        return followRepository.findByMemberAndFollowedMember(fromMemberId, toMemberId);
+        return followRepository.findByMemberAndFollowedMember(fromMember, toMember);
     }
 
-    public List<Follow> findByFromMemberId(String memberId) {
-        return followRepository.findByMember(memberId);
+    public List<Follow> findByFromMember(Member member) {
+        return followRepository.findByMember(member);
     }
 
-    public Follow create(String fromMemberId, String toMemberId) {
-        if (memberService.findById(fromMemberId).isEmpty() ||
-                memberService.findById(toMemberId).isEmpty()) {
-            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
-        }
-
-        if (findByFromMemberIdAndFollowedMemberId(fromMemberId, toMemberId).isPresent()) {
+    @Transactional
+    public Follow create(Member fromMember, Member toMember) {
+        if (findByFromMemberAndFollowedMember(fromMember, toMember).isPresent()) {
             throw new DuplicateFieldException(ALREADY_FOLLOWED);
         }
 
-        return followRepository.insert(Follow.builder()
+        return followRepository.save(Follow.builder()
                 .id(UUID.randomUUID().toString())
                 .createdDate(LocalDateTime.now())
-                .member(fromMemberId)
-                .followedMember(toMemberId)
+                .member(fromMember)
+                .followedMember(toMember)
                 .build()
         );
     }
-
 }

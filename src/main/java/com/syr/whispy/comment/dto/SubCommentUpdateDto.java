@@ -10,9 +10,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SubCommentUpdateDto {
 
-    private String subComment;
-
     @NotBlank
     private String content;
-
 }

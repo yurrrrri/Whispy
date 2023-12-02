@@ -7,7 +7,6 @@ import com.syr.whispy.member.service.MemberService;
 import com.syr.whispy.post.entity.Post;
 import com.syr.whispy.post.entity.Tag;
 import com.syr.whispy.post.service.PostService;
-import com.syr.whispy.post.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +28,6 @@ public class MemberController {
     private final MemberService memberService;
     private final FollowService followService;
     private final PostService postService;
-    private final TagService tagService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
@@ -42,13 +40,10 @@ public class MemberController {
     public String showMyPage(Model model, @AuthenticationPrincipal OAuth2User principal) {
         Member member = memberService.findByUsernameAndGet(principal.getName());
 
-        List<Post> posts = postService.findByWriter(member.getUsername());
-
-        List<String> tagIdList = new ArrayList<>();
-        posts.forEach(p -> tagIdList.addAll(p.getTags()));
+        List<Post> posts = postService.findByWriter(member);
 
         List<Tag> tags = new ArrayList<>();
-        tagIdList.forEach(i -> tags.add(tagService.findByIdAndGet(i)));
+        posts.forEach(p -> tags.addAll(p.getTags()));
 
         model.addAttribute("member", member);
         model.addAttribute("posts", posts);
@@ -60,7 +55,7 @@ public class MemberController {
     @GetMapping("/timeline")
     public String showMyTimeline(Model model, @AuthenticationPrincipal OAuth2User principal) {
         Member member = memberService.findByUsernameAndGet(principal.getName());
-        List<Follow> followings = followService.findByFromMemberId(member.getId());
+        List<Follow> followings = followService.findByFromMember(member);
 
         List<Post> posts = new ArrayList<>();
         followings.forEach(f -> posts.addAll(postService.findByWriter(f.getFollowedMember())));
@@ -70,5 +65,4 @@ public class MemberController {
         model.addAttribute("posts", posts);
         return "usr/timeline";
     }
-
 }

@@ -1,4 +1,4 @@
-package com.syr.whispy.base.security.config;
+package com.syr.whispy.base.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

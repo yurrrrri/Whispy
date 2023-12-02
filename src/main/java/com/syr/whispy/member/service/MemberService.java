@@ -6,6 +6,7 @@ import com.syr.whispy.member.entity.Member;
 import com.syr.whispy.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static com.syr.whispy.member.code.MemberErrorCode.MEMBER_NOT_EXISTS;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class MemberService {
 
@@ -24,8 +26,7 @@ public class MemberService {
     }
 
     public Member findByIdAndGet(String id) {
-        return findById(id)
-                .orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
+        return findById(id).orElseThrow(() -> new DataNotFoundException(MEMBER_NOT_EXISTS));
     }
 
     public Optional<Member> findByUsername(String username) {
@@ -36,35 +37,17 @@ public class MemberService {
         return findByUsername(username).orElseGet(() -> join(username));
     }
 
-    public void verify(String memberId) {
-        if (findById(memberId).isEmpty()) {
-            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
-        }
-    }
-
-    public void verify(String member1Id, String member2Id) {
-        if (findById(member1Id).isEmpty() || findById(member2Id).isEmpty()) {
-            throw new DataNotFoundException(MEMBER_NOT_EXISTS);
-        }
-    }
-
+    @Transactional
     public Member join(String username) {
-        String newUsername = username;
-
-        if (username.contains("{id=") && username.contains("}")) {
-            newUsername = username.replace("{id=", "").replace("}", "");
-        }
-
-        final String finalUsername = newUsername;
-
         return findByUsername(username)
-                .orElseGet(() -> memberRepository.insert(Member.builder()
+                .orElseGet(() -> memberRepository.save(Member.builder()
                         .id(UUID.randomUUID().toString())
                         .createdDate(LocalDateTime.now())
-                        .username(finalUsername)
+                        .username(username)
                         .build()));
     }
 
+    @Transactional
     public Member update(MemberUpdateDto dto) {
         Member member = findByIdAndGet(dto.getMemberId());
 
@@ -79,13 +62,13 @@ public class MemberService {
         );
     }
 
-    public Member softDelete(String memberId) {
-        Member member = findByIdAndGet(memberId);
+    @Transactional
+    public Member softDelete(String id) {
+        Member member = findByIdAndGet(id);
 
         return memberRepository.save(member.toBuilder()
                 .deletedDate(LocalDateTime.now())
                 .build()
         );
     }
-
 }
