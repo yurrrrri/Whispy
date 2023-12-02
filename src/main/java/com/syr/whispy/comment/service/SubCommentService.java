@@ -55,7 +55,7 @@ public class SubCommentService {
 
         return subCommentRepository.insert(SubComment.builder()
                 .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
                 .comment(dto.getComment())
                 .content(dto.getContent())
@@ -67,7 +67,7 @@ public class SubCommentService {
         SubComment subComment = findByIdAndGet(dto.getSubComment());
 
         return subCommentRepository.save(subComment.toBuilder()
-                .modifyDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
                 .content(dto.getContent())
                 .build()
         );
@@ -78,7 +78,7 @@ public class SubCommentService {
         String commentId = subComment.getComment();
 
         subCommentRepository.save(subComment.toBuilder()
-                .deleteDate(LocalDateTime.now())
+                .deletedDate(LocalDateTime.now())
                 .build());
 
         return commentId;

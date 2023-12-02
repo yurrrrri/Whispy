@@ -1,8 +1,6 @@
 package com.syr.whispy.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +19,17 @@ import java.time.LocalDateTime;
 public class DeletedMember {
 
     @Id
+    @GeneratedValue
     private String id;
+    @Column(unique = true)
     private String username;
+    @Column(unique = true)
     private String nickname;
+    @Column(unique = true)
     private String email;
+
     private LocalDateTime birthday;
+
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 }

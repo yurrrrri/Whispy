@@ -1,12 +1,14 @@
 package com.syr.whispy.chat.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
-import jakarta.persistence.ManyToOne;
+import com.syr.whispy.member.entity.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,6 +17,6 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 public class Chat extends BaseEntity {
 
-    @ManyToOne
-    private List<String> members;
+    @Builder.Default
+    private List<Member> members = new ArrayList<>();
 }

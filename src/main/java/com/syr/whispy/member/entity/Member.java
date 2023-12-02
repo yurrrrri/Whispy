@@ -1,9 +1,11 @@
 package com.syr.whispy.member.entity;
 
 import com.syr.whispy.base.entity.BaseEntity;
+import com.syr.whispy.post.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,10 +26,8 @@ public class Member extends BaseEntity {
 
     @Column(unique = true)
     private String username;
-
     @Column(unique = true)
     private String nickname;
-
     @Column(unique = true)
     private String email;
 
@@ -34,11 +35,13 @@ public class Member extends BaseEntity {
 
     private String image;
 
-    @Max(50)
-    private String description; // 소개글
+    @Max(value = 50, message = "50자 이하로 작성해주세요.")
+    private String description;
 
-    private List<String> starredPosts;
+    @Builder.Default
+    private List<Post> starredPosts = new LinkedList<>();
 
+    @Builder.Default
     private Set<Role> authorities = new HashSet<>();
 
     public List<? extends GrantedAuthority> getAuthorities() {
@@ -50,5 +53,4 @@ public class Member extends BaseEntity {
     public void addRole(Role role) {
         this.authorities.add(role);
     }
-
 }

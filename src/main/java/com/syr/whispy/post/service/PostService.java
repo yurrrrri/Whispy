@@ -42,7 +42,7 @@ public class PostService {
     public Post create(PostCreateDto dto) {
         return postRepository.insert(Post.builder()
                 .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
                 .content(dto.getContent())
                 .tags(dto.getTags())
@@ -56,7 +56,7 @@ public class PostService {
         return postRepository.save(post.toBuilder()
                 .content(dto.getContent())
                 .tags(dto.getTags())
-                .modifyDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
                 .build()
         );
     }
@@ -65,7 +65,7 @@ public class PostService {
         Post post = findByIdAndGet(id);
 
         postRepository.save(post.toBuilder()
-                .deleteDate(LocalDateTime.now())
+                .deletedDate(LocalDateTime.now())
                 .build()
         );
     }

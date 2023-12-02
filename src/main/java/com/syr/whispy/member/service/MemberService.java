@@ -60,7 +60,7 @@ public class MemberService {
         return findByUsername(username)
                 .orElseGet(() -> memberRepository.insert(Member.builder()
                         .id(UUID.randomUUID().toString())
-                        .createDate(LocalDateTime.now())
+                        .createdDate(LocalDateTime.now())
                         .username(finalUsername)
                         .build()));
     }
@@ -69,7 +69,7 @@ public class MemberService {
         Member member = findByIdAndGet(dto.getMemberId());
 
         return memberRepository.save(member.toBuilder()
-                .modifyDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
                 .birthday(dto.getBirthday())
@@ -83,7 +83,7 @@ public class MemberService {
         Member member = findByIdAndGet(memberId);
 
         return memberRepository.save(member.toBuilder()
-                .deleteDate(LocalDateTime.now())
+                .deletedDate(LocalDateTime.now())
                 .build()
         );
     }

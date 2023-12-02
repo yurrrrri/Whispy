@@ -23,7 +23,7 @@ public class DeletedMemberService {
                         .nickname(dto.getNickname())
                         .email(dto.getEmail())
                         .birthday(dto.getBirthday())
-                        .createDate(LocalDateTime.now())
+                        .createdDate(LocalDateTime.now())
                         .build()
         );
     }

@@ -44,7 +44,7 @@ public class FollowService {
 
         return followRepository.insert(Follow.builder()
                 .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
                 .member(fromMemberId)
                 .followedMember(toMemberId)
                 .build()

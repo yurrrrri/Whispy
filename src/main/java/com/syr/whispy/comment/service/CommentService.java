@@ -56,7 +56,7 @@ public class CommentService {
 
         return commentRepository.insert(Comment.builder()
                 .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
                 .writer(dto.getWriter())
                 .post(dto.getPost())
                 .content(dto.getContent())
@@ -68,7 +68,7 @@ public class CommentService {
         Comment comment = findByIdAndGet(dto.getComment());
 
         return commentRepository.save(comment.toBuilder()
-                .modifyDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
                 .content(dto.getContent())
                 .build()
         );
@@ -78,7 +78,7 @@ public class CommentService {
         Comment comment = findByIdAndGet(id);
 
         commentRepository.save(comment.toBuilder()
-                .deleteDate(LocalDateTime.now())
+                .deletedDate(LocalDateTime.now())
                 .build());
     }
 

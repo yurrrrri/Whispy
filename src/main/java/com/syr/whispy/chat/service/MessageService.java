@@ -42,7 +42,7 @@ public class MessageService {
 
         return messageRepository.insert(Message.builder()
                 .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
                 .chat(dto.getChat())
                 .sender(dto.getSender())
                 .content(dto.getContent())

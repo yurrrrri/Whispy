@@ -39,7 +39,7 @@ public class BlockService {
 
         return blockRepository.insert(Block.builder()
                 .id(UUID.randomUUID().toString())
-                .createDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
                 .member(fromMemberId)
                 .blockedMember(toMemberId)
                 .build()
