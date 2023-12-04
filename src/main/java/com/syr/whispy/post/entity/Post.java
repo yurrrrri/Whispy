@@ -34,10 +34,6 @@ public class Post extends BaseEntity implements Comparable<Post> {
     @OneToMany
     private List<Tag> tags = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "post")
-    private List<Like> likes = new ArrayList<>();
-
     @Override
     public int compareTo(Post other) {
         return other.getCreatedDate().compareTo(this.getCreatedDate());
